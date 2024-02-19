@@ -13,7 +13,7 @@ def adivinador(q, r, b, e):
     e: End (Fin) del Rango
     """
     if r==0:
-        return q
+        return (q, b, e)
     elif r == -1:
         e = q - 1
         q = math.floor((b + e) / 2)
@@ -32,7 +32,7 @@ def main():
     q = math.floor((b + e) / 2)
     r = 0
     while r != 2:
-        q = adivinador(q, r, b, e)
+        (q, b, e) = adivinador(q, r, b, e)
         print(f"Creo que es el {q}")
         print("Escribe:")
         print("\t-1\tSi tú número es menor")
