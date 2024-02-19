@@ -21,7 +21,7 @@ def adivinador(q, r, b, e):
     elif r == 1:
         b = q + 1
         q = math.floor((b + e) / 2)
-        return (q, 0, b, e)
+        return adivinador(q, 0, b, e)
 
 
 def main():
