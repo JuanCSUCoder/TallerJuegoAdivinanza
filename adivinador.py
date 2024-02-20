@@ -2,6 +2,9 @@
 
 import math
 
+# Taller 2 - Juego de Adivinanzas
+# Juan Camilo Sánchez Urrego & Sofía Cespedes Vargas
+
 def adivinador(q, r, b, e):
     """
     q: Número Previo

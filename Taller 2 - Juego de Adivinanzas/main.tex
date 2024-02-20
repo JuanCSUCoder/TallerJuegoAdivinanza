@@ -1,0 +1,225 @@
+%% LyX 2.3.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,spanish]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\pagestyle{headings}
+\usepackage{float}
+\usepackage{amssymb}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algoritmo}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{mathtools}
+\usepackage{placeins}
+\usepackage{amsmath}
+
+\newcommand{\quotes}[1]{``#1''}
+
+% specify here the journal
+\journal{Curso de <<Análisis de algoritmos>>, PUJ, Bogotá, Colombia - }
+
+% use this if you need line numbers
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>}}
+
+\begin{document}
+
+\begin{frontmatter}{}
+
+\title{Taller 2 - Juego de Adivinanzas\tnoteref{t1,t2}}
+
+\tnotetext[t1]{Este documento presenta la escritura formal de un algoritmo.}
+
+\author[jcsu]{Juan Camilo Sánchez Urrego}
+
+\ead{sanchezjcamilo@javeriana.edu.co}
+
+\author[scv]{Sofía Cespedes Vargas}
+
+\ead{sofia.cespedes@javeriana.edu.co}
+
+\address[lfv]{Pontificia Universidad Javeriana, Bogotá, Colombia}
+\begin{abstract}
+En este documento se busca analizar y resolver el problema de \quotes{Adivinar Números}. Concretamente, adivinar un número en concreto que un usuario haya pensado previamente. Además, de buscar resolver dicho problema utilizando la estrategia de dividir y vencer.
+\end{abstract}
+\begin{keyword}
+algoritmo, pensador, adivinador, adivinar, juego.
+\end{keyword}
+
+\end{frontmatter}{}
+
+\section{Análisis del problema}
+
+Inicialmente es necesario comprender el contexto del problema a resolver, en este caso el juego \quotes{adivinar un número} el cual implica dos participantes: el \quotes{pensador} y el \quotes{adivinador}. El \quotes{pensador} elige un número natural y el \quotes{adivinador} intenta adivinarlo haciendo preguntas estratégicas, donde el objetivo es que el \quotes{adivinador} acierte el número pensado por el \quotes{pensador} utilizando la menor cantidad de intentos posible. el juego consta de unas reglas fundamentales para el funcionamiento del juego las cuales son: 
+
+\begin{enumerate}
+\item 
+\textbf El \quotes{pensador} elige un número natural desconocido para el \quotes{adivinador}.
+
+\item 
+\textbf En cada turno, el \quotes{adivinador} proporciona un conjunto de números al \quotes{pensador}.
+El \quotes{pensador} compara cada número del conjunto con el número pensado y responde si es mayor, menor o igual.
+\item 
+\textbf El \quotes{adivinador} utiliza esta información para restringir las posibilidades y hacer un nuevo intento de adivinar el número
+\end{enumerate}
+
+Ahora bien cuando se plantea una solución acorde al algoritmo es necesario tener en cuenta algunos factores tales como la eficiencia pues se busca un algoritmo que minimice el número de intentos requeridos para adivinar el número y la complejidad dado que esta evalúa la complejidad temporal y espacial del algoritmo propuesto. Por otro lado es factible tener en cuenta y analizar el peor de los casos ya que nos permite evaluar el rendimiento del algoritmo propuesto en el peor momento por ejemplo la máxima cantidad de intentos que el \quotes{adivinador} podría necesitar para adivinar el número.
+
+\begin{itemize}
+    \item Es necesario estructurar la  función del problema, pues nos ayudara a comprenderlo de manera conceptual.  $f(a_i)$:  Función que devuelve la respuesta del ``pensador'' para el número $a_i$ en el turno $i$.
+    \item El ``pensador'' selecciona un número natural $n$.
+    \item El ``adivinador'' hace un conjunto de preguntas $\{a_1, a_2, ..., a_k\}$, donde $k$ es el tamaño del conjunto.
+    \item El ``pensador'' proporciona las respuestas $\{r_1, r_2, ..., r_k\}$.
+    \item Para cada $a_i$, el ``pensador'' devuelve $r_i$, indicando si $a_i$ es mayor, menor o igual a $n$.
+\end{itemize}
+
+\section{Diseño del problema}
+
+Para Diseñar el problema es necesario definir las entradas , el proceso y las salidas.
+
+\begin{enumerate}
+\item \emph{\uline{Entradas}}: 
+\begin{enumerate} 
+\item Número Pensado (n): Es el número natural que el "pensador" selecciona al comienzo del juego. Esta es la información que el "adivinador" intentará adivinar.
+\item Conjunto de Números $\{a_1, a_2, ..., a_k\}$ En cada turno, el "adivinador" proporciona un conjunto de números al "pensador". Estos números son los que el "adivinador" está considerando como posibles candidatos para el número pensado n.
+\end{enumerate}
+\item \emph{\uline{Salidas}}: 
+\begin{enumerate} 
+\item  Respuestas del Pensador $\{r_1, r_2, ..., r_k\}$ : Para cada número $a_i$ en el conjunto proporcionado por el "adivinador", el "pensador" devuelve una respuesta indicando si $a_i$ es mayor, menor o igual al número pensado n.
+\begin{itemize}
+\item $r_i = -1$: $a_i$ es menor que $n$.
+\item $r_i = 0$: $a_i$ es igual a $n$.
+\item $r_i = 1$: $a_i$ es mayor que $n$.
+\end{itemize}
+\end{enumerate}
+\end{enumerate}
+
+\section{Algoritmo de solución}
+
+\subsection{Procedimiento}
+
+\begin{algorithm}[H]
+    \caption{Algoritmo que calcula el promedio utilizando un algoritmo de suma iterativo.}
+    \begin{algorithmic}[1]
+        \Require{$q \in \mathbb{N}$}
+        \Require{$r \in \mathbb{Z}$}
+        \Require{$b \in \mathbb{N}$}
+        \Require{$e \in \mathbb{N}$}
+        \Procedure{Adivinador}{$q, r, b, e$}
+            \If{$r = 0$}
+                \State \Return $\langle q, b, e\rangle$
+            \EndIf
+            \If{$r = -1$}
+                \State $e \gets q - 1$
+                \State $q \gets \lfloor (b + e) / 2 \rfloor$
+            \EndIf
+            \If{$r = 1$}
+                \State $b \gets q + 1$
+                \State $q \gets \lfloor (b + e) / 2 \rfloor$
+            \EndIf
+            \State \Return \Call{Adivinador}{$q, 0, b, e$}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Invariante}
+
+\begin{enumerate}
+    \item \textbf{Inicialización:} Al iniciar la variable $q$ contiene el valor que se respondió en la jugada anterior, $r$ es la respuesta del \quotes{pensador} de si el número es mayor o menor, o en caso de ser la primera jugada puede ser $0$, $b$ contiene el limite inferior del rango acotado anteriormente, $e$ contiene el limite superior del rango acotado.
+    \item \textbf{Mantenimiento:} Después de pasar por los condicionales, $q$ contiene el nuevo número para probar, $r = 0$ y $b$ y $e$ tienen el rango acotado con la nueva información.
+    \item \textbf{Finalización:} Eventualmente el \quotes{pensador} tendrá que responder que se ha adivinado el número correctamente.
+\end{enumerate}
+
+\subsection{Análisis de complejidad del Recursivo}
+
+Se plantea la siguiente ecuación de complejidad temporal del algoritmo:
+
+\begin{equation}
+    T(n) = a T\left(\frac{n}{b}\right) + f(n)
+\end{equation}
+
+$$
+    f(n) = 1,\ a = 1,\ b = 2
+$$
+
+$$
+    T(n) = T\left(\frac{n}{2}\right) + O(1)
+$$
+
+\textbf{Caso 1}
+
+\begin{equation}
+    f(n) \in O(n^{\log_b a - \epsilon})
+\end{equation}
+
+$$
+    1 = n^{\log_2 1 - \epsilon}
+$$
+
+$$
+    0 = \log_2 (1 - \epsilon) \wedge \epsilon = 0 \rightarrow 0 = 0
+$$
+
+Este caso no se puede cumplir debido a que:
+
+$$
+    \epsilon > 0
+$$
+
+\textbf{Caso 2}
+
+\begin{equation}
+    f(n) \notin \Theta(n^{\log_b a})
+\end{equation}
+
+$$
+    1 = n^{\log_2 1} = n^0 = 1
+$$
+
+\textbf{Caso 3}
+
+\begin{equation}
+    f(n) \in \Omega(n^{\log_b a + \epsilon})
+\end{equation}
+
+$$
+    1 = n^{\log_2 (1 + \epsilon)}
+$$
+$$
+    0 = \log_2 (1 + \epsilon)
+$$
+$$
+    \epsilon = 0 \wedge \log_2 (1 + \epsilon) \rightarrow 0 = 0
+$$
+
+Este caso no se puede cumplir debido a que:
+
+$$
+    \epsilon > 0
+$$
+
+\textbf{Orden de Complejidad - Caso 2}
+
+$$
+    T(n) \in \Theta(n^{\log_2 1} \log_2 n)
+$$ 
+
+$$
+    T(n) \in \Theta(\log_2 n)
+$$
+
+\end{document}
